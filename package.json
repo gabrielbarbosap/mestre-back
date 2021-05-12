@@ -4,7 +4,11 @@
     "description": "Back O Entendedor",
     "main": "server.js",
     "scripts": {
-        "dev": "nodemon server.js"
+        "dev": "nodemon server.js",
+        "start": "node server.js"
+    },
+    "engines": {
+        "node": "12.x"
     },
     "keywords": [],
     "author": "Gabriel B Pereira",
