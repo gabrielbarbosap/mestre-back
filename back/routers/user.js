@@ -33,17 +33,6 @@ router.get('/:id', async(req, res) => {
     }
 })
 
-
-
-router.put('/total', (req, res) => {
-
-})
-
-router.put('/point', async(req, res) => {
-
-
-})
-
 router.post('/', async(req, res) => {
     const user = new User({
         name: req.body.name,

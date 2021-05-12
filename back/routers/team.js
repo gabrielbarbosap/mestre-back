@@ -23,6 +23,24 @@ router.get('/', async(req, res) => {
     }
 })
 
+router.get('/match', async(req, res) => {
+    try {
+        const team = await User.find().sort({
+            'lastMatch': -1
+        })
+        console.log(team)
+        res.json({
+            sucess: 'true',
+            data: team
+        })
+    } catch (err) {
+        res.json({
+            sucess: false,
+            data: err
+        })
+    }
+})
+
 router.get('/:nick', async(req, res) => {
     try {
         const { nick } = req.params;
@@ -53,6 +71,18 @@ router.put('/point', async(req, res) => {
                 res.json({
                     sucess: true,
                     data: zg_1
+                })
+                break;
+            case "team.zg_2._id":
+                const zg_2 = await User.updateMany({
+                    "team.zg_2._id": req.body.id
+
+                }, {
+                    $set: { "team.zg_2.mediaPlay": req.body.points }
+                })
+                res.json({
+                    sucess: true,
+                    data: zg_2
                 })
                 break;
             case "team.mc_1._id":
@@ -106,7 +136,10 @@ router.put('/point', async(req, res) => {
 router.put('/media', async(req, res) => {
     try {
         const team = await User.updateMany({}, [{
-            $set: { "team.media": { $sum: ["$team.zg_1.mediaPlay", "$team.mc_1.mediaPlay", "$team.mc_2.mediaPlay", "$team.at_1.mediaPlay"] } }
+            $set: {
+                "team.media": { $sum: ["$team.zg_1.mediaPlay", "$team.zg_2.mediaPlay", "$team.mc_1.mediaPlay", "$team.mc_2.mediaPlay", "$team.at_1.mediaPlay"] },
+                'lastMatch': { $sum: ["$team.zg_1.mediaPlay", "$team.zg_2.mediaPlay", "$team.mc_1.mediaPlay", "$team.mc_2.mediaPlay", "$team.at_1.mediaPlay"] }
+            }
         }])
         res.json({
             sucess: true,
@@ -147,6 +180,7 @@ router.put('/', async(req, res) => {
             $set: {
                 team: {
                     zg_1: req.body.zg_1,
+                    zg_2: req.body.zg_2,
                     mc_1: req.body.mc_1,
                     mc_2: req.body.mc_2,
                     at_1: req.body.at_1,

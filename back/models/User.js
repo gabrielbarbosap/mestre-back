@@ -21,7 +21,6 @@ const userSchema = new Schema({
     question: {
         type: String,
         required: true,
-        select: false
     },
     teamEarth: {
         type: String,
@@ -37,6 +36,9 @@ const userSchema = new Schema({
     },
     team: {
         type: Object
+    },
+    lastMtach: {
+        type: String
     }
 
 });
