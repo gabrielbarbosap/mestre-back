@@ -17,4 +17,4 @@ app.get('/', (req, res) => {
 
 app.use('/api', api)
 
-app.listen(PORT);
+app.listen(process.env.PORT || PORT);
