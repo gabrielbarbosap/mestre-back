@@ -9,7 +9,6 @@ const teamsForSelect = require('./teamsForSelect');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-require('../db/db')
 
 router.get('/', (req, res) => {
     res.json({
